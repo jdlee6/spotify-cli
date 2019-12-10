@@ -8,8 +8,6 @@ import spotipy.util as util
 from json.decoder import JSONDecodeError
 
 
-# sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-
 def generateToken(username):
     '''
     generates auth token for spotify object
@@ -21,7 +19,6 @@ def generateToken(username):
         token = util.prompt_for_user_token(username, scope="user-library-read playlist-modify-private")
     return token
 
-
 def searchArtist(name, limit=10):
     '''
     return artist spotify url & artist id
@@ -32,7 +29,6 @@ def searchArtist(name, limit=10):
     for attr in data['items']:
         artist.append((attr['id'], attr['external_urls']['spotify']))
     return artist[0][1], artist[0][0]
-
 
 def artistAlbums(artist_id):
     '''
@@ -46,7 +42,6 @@ def artistAlbums(artist_id):
             album_name, album_id = attr['name'], attr['id']
             albums.append((album_name, album_id))
     return albums
-
 
 def getAlbumSongs(album_id):
     '''
@@ -62,14 +57,12 @@ def getAlbumSongs(album_id):
         tracks.append((track_number, track_name, duration))
     return tracks
 
-
 def convertToMin(ms):
     '''
     converts milliseconds to minutes
     '''
     time = datetime.timedelta(milliseconds=ms)
     return str(time)[:-7]
-
 
 def printAlbums(artist, artist_id):
     ''' 
@@ -82,7 +75,6 @@ def printAlbums(artist, artist_id):
         album_slots.append(i)
         print(i, albums[i][0])
     return album_slots, albums
-
 
 def printTracksOfAlbum(artist, album_slots, albums):
     '''
@@ -99,17 +91,15 @@ def printTracksOfAlbum(artist, album_slots, albums):
         sys.exit()
     return songs
 
-
 def songDetails(songs):
     '''
     get details of specific song
     '''
     pass
 
-
-def main():
+def search():
     '''
-    main loop
+    search loop
     '''
     artist = input('Enter the artist to search for: ')
     url, artist_id = searchArtist(artist)

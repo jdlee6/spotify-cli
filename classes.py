@@ -4,7 +4,6 @@ class User:
     def __init__(self, username):
         self.username = username
 
-
     def name(self, spotify):
         '''
         name of current_user
@@ -12,7 +11,6 @@ class User:
         user = spotify.current_user()
         display_name = user['display_name']
         print(display_name)
-
 
     def albums(self, username, spotify, limit):
         '''
@@ -29,7 +27,6 @@ class User:
 
     def playlists(self, spotify):
         pass
-
 
 
     def __repr__(self):
