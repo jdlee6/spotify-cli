@@ -1,0 +1,14 @@
+#################
+#######TODO######
+#################
+
+- curses menu to navigate within app
+- start user dialogue functions
+- preview songs
+- colored text in terminal
+- format spacing in terminal for output
+
+
+#################
+####COMPLETED####
+#################
