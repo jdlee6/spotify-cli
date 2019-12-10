@@ -7,8 +7,10 @@
 - preview songs
 - colored text in terminal
 - format spacing in terminal for output
-
+- song detail function
 
 #################
 ####COMPLETED####
 #################
+
+- created user object

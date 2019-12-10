@@ -2,9 +2,24 @@ import os
 import pprint
 import sys
 import datetime
+from classes import User
 import spotipy
 import spotipy.util as util
 from json.decoder import JSONDecodeError
+
+
+# sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
+def generateToken(username):
+    '''
+    generates auth token for spotify object
+    '''
+    try:
+        token = util.prompt_for_user_token(username, scope="user-library-read playlist-modify-private")
+    except (AttributeError, JSONDecodeError):
+        os.remove(f".cache-{username}")
+        token = util.prompt_for_user_token(username, scope="user-library-read playlist-modify-private")
+    return token
 
 
 def searchArtist(name, limit=10):
@@ -16,7 +31,6 @@ def searchArtist(name, limit=10):
     data = search['artists']
     for attr in data['items']:
         artist.append((attr['id'], attr['external_urls']['spotify']))
-    # return artist id & artist url 
     return artist[0][1], artist[0][0]
 
 
@@ -57,31 +71,16 @@ def convertToMin(ms):
     return str(time)[:-7]
 
 
-def generateToken(username):
-    '''
-    generates auth token for spotify object
-    '''
-    token = util.prompt_for_user_token(username)
-    try:
-        token = util.prompt_for_user_token(username)
-    except (AttributeError, JSONDecodeError):
-        os.remove(f".cache-{username}")
-        token = util.prompt_for_user_token(username)
-    return token
-
-
 def printAlbums(artist, artist_id):
     ''' 
     prints albums of artist 
     '''
     albums = artistAlbums(artist_id)
-    print(f'{artist}\'s Discography: ')
-
     album_slots = []
+    print(f'{artist}\'s Discography: ')
     for i in range(len(albums)):
         album_slots.append(i)
         print(i, albums[i][0])
-
     return album_slots, albums
 
 
@@ -99,6 +98,13 @@ def printTracksOfAlbum(artist, album_slots, albums):
     else:
         sys.exit()
     return songs
+
+
+def songDetails(songs):
+    '''
+    get details of specific song
+    '''
+    pass
 
 
 def main():
@@ -120,8 +126,16 @@ if __name__ == "__main__":
         username = sys.argv[1]
         token = generateToken(username)
         spotify = spotipy.Spotify(auth=token)
-        main()
+        # main()
 
+        joe = User(username)
+        joe.getName(spotify)
+        joe.savedAlbums(username, spotify, limit=10)
+        
+        
+        # user = User(username)
+        # print(user)
+        # print(user.playlists(spotify))
         # user = spotify.current_user()
         # display_name = user['display_name']
         # print('Current User: ', display_name)
