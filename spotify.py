@@ -116,17 +116,10 @@ if __name__ == "__main__":
         username = sys.argv[1]
         token = generateToken(username)
         spotify = spotipy.Spotify(auth=token)
-        # main()
+        # search()
 
         joe = User(username)
-        joe.getName(spotify)
-        joe.savedAlbums(username, spotify, limit=10)
-        
-        
-        # user = User(username)
-        # print(user)
-        # print(user.playlists(spotify))
+        joe.albums(spotify, limit=15)
+        # print('')
+        # joe.tracks(spotify, limit=15)    
         # user = spotify.current_user()
-        # display_name = user['display_name']
-        # print('Current User: ', display_name)
-        # START USER INTERACTION
