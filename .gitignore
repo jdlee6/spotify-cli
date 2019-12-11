@@ -2,5 +2,3 @@ __pycache__/*
 .vscode/*
 env/*
 .cache-joe
-config.py
-main.py

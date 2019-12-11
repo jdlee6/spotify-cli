@@ -2,11 +2,12 @@ import os
 import pprint
 import sys
 import datetime
+from subprocess import call
 from classes import User
+from utils import convertToMin
 import spotipy
 import spotipy.util as util
 from json.decoder import JSONDecodeError
-
 
 def generateToken(username):
     '''
@@ -57,13 +58,6 @@ def getAlbumSongs(album_id):
         tracks.append((track_number, track_name, duration))
     return tracks
 
-def convertToMin(ms):
-    '''
-    converts milliseconds to minutes
-    '''
-    time = datetime.timedelta(milliseconds=ms)
-    return str(time)[:-7]
-
 def printAlbums(artist, artist_id):
     ''' 
     prints albums of artist 
@@ -108,18 +102,29 @@ def search():
     songs = printTracksOfAlbum(artist, album_slots, albums)
 
 
+def commands(arg, user, spotify):
+    '''
+    command line arguments
+    '''
+    if arg == '-t':
+        user.tracks(spotify, limit=10)    
+    elif arg == '-a':
+        user.albums(spotify, limit=10)
+    elif arg == '-s':
+        search()
+    else:
+        print('Enter a valid command')
+
+
 if __name__ == "__main__":
     if len(sys.argv) == 1:
-        print('enter username!')
-        sys.exit()
-    else:
+        call(["python", "menu.py", "-h"])
+
+    elif len(sys.argv) == 3:
         username = sys.argv[1]
+        command = sys.argv[2]
         token = generateToken(username)
         spotify = spotipy.Spotify(auth=token)
-        # search()
 
-        joe = User(username)
-        joe.albums(spotify, limit=15)
-        # print('')
-        # joe.tracks(spotify, limit=15)    
-        # user = spotify.current_user()
+        user = User(username)
+        commands(command, user, spotify)
