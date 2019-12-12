@@ -3,21 +3,23 @@
 #################
 - start user dialogue functions
 - preview songs
-- colored text in terminal
+- colored texts in terminal
 - song detail function
-- needs to list if explict or non explicit
-- remove albums from saved albums
+- top tracks of artists
+* needs to list if explict or non explicit
+
 
 #################
 ###IN PROGRESS###
 #################
-- save album
 - format spacing in terminal for output
 - list albums & album id from artists   
     * 2 word names only need the last name o-o
+
 
 #################
 ####COMPLETED####
 #################
 - create user object [x]
 - create cli command menu [x]
+- save album function

@@ -26,6 +26,8 @@ def searchArtist(name, limit=10):
     '''
     return artist spotify url & artist id
     '''
+    if name == '':
+        sys.exit()
     artist = []
     search = spotify.search(q=name, type='artist')
     data = search['artists']
@@ -54,7 +56,6 @@ def getAlbumSongs(album_id):
     tracks = []
     a_tracks = spotify.album_tracks(album_id)
     data = a_tracks['items']
-    # pprint.pprint(data)
     for attr in data:
         track_name, track_number, duration = attr['name'], attr['track_number'], convertToMin(attr['duration_ms'])
         tracks.append((track_number, track_name, duration))
@@ -69,7 +70,7 @@ def printAlbums(artist, artist_id):
     print(f'{artist}\'s Discography: ')
     for i in range(len(albums)):
         album_slots.append(i)
-        print(i, albums[i][0])
+        print(str(i).ljust(10), albums[i][0])
     return album_slots, albums
 
 def printTracksOfAlbum(artist, album_slots, albums):
@@ -82,12 +83,11 @@ def printTracksOfAlbum(artist, album_slots, albums):
         songs = getAlbumSongs(album_id)
         print(f'\n{artist} - {album_name}\'s Tracklist: ')
         for track_number, track_name, duration in songs:
-            print(track_number, track_name, duration)
+            print(str(track_number).ljust(10), track_name.ljust(50), duration.ljust(25))
     else:
         sys.exit()
     return songs
 
-# main search function
 def search():
     '''
     search loop
@@ -112,7 +112,7 @@ def listAlbum(spotify, artist_name):
     artist_albums = artistAlbums(artist_id, limit=50)
     for selection in artist_albums:
         name, album_id = selection
-        print(name, album_id)
+        print(name.ljust(50), album_id.ljust(50))
 
 def commands(arg, user, spotify):
     '''

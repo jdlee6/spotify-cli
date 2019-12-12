@@ -44,12 +44,6 @@ class User:
         for i in range(len(tracks)):
             print(f'{tracks[i][0].ljust(25)} {tracks[i][1].ljust(25)} {tracks[i][3].ljust(10)} {str(tracks[i][2]).rjust(6)} {tracks[i][4].rjust(20)}')
 
-    def playlists(self, spotify):
-        '''
-        outputs current user's playlists
-        '''
-        pass
-
     def saveAlbum(self, spotify, album_id):
         '''
         adds album to saved albums
@@ -58,6 +52,12 @@ class User:
         return spotify.current_user_saved_albums_add(albums=albums)
 
     def saveTracks(self, spotify):
+        pass
+
+    def playlists(self, spotify):
+        '''
+        outputs current user's playlists
+        '''
         pass
 
     def __repr__(self):
