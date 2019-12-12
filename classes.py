@@ -16,7 +16,7 @@ class User:
         outputs artist's name, album name, total tracks, 
         release date
         '''
-        data = spotify.current_user_saved_albums(limit=limit)['items']
+        data = spotify.current_user_saved_albums(limit=50)['items']
         names = [attr['album']['artists'][0]['name'] for attr in data]
         album = [attr['album']['name'] for attr in data]
         total_tracks = [attr['album']['total_tracks'] for attr in data]
@@ -32,7 +32,7 @@ class User:
         outputs track name, album name, track number, 
         duration, release date
         '''
-        data = spotify.current_user_saved_tracks(limit=limit)['items']
+        data = spotify.current_user_saved_tracks(limit=20)['items']
         track_name = [attr['track']['name'] for attr in data]
         track_number = [attr['track']['track_number'] for attr in data]
         duration = [convertToMin(attr['track']['duration_ms']) for attr in data]
@@ -43,12 +43,22 @@ class User:
         print('Title'.ljust(25), 'Album'.ljust(25), 'Duration'.ljust(10), 'Track Numbers'.rjust(5), 'Release Date'.rjust(15))
         for i in range(len(tracks)):
             print(f'{tracks[i][0].ljust(25)} {tracks[i][1].ljust(25)} {tracks[i][3].ljust(10)} {str(tracks[i][2]).rjust(6)} {tracks[i][4].rjust(20)}')
-        
-    def addAlbum(self, spotify):
+
+    def playlists(self, spotify):
+        '''
+        outputs current user's playlists
+        '''
         pass
 
-    def addTracks(self, spotify):
+    def saveAlbum(self, spotify, album_id):
+        '''
+        adds album to saved albums
+        '''
+        albums = [album_id]
+        return spotify.current_user_saved_albums_add(albums=albums)
+
+    def saveTracks(self, spotify):
         pass
 
     def __repr__(self):
-        return f'User: {self.username} | Methods: .tracks(), .albums()'
+        return f'User: {self.username} | Methods: .tracks(), .albums() .name()'

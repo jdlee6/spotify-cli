@@ -5,13 +5,16 @@
 - preview songs
 - colored text in terminal
 - song detail function
-
+- needs to list if explict or non explicit
+- remove albums from saved albums
 
 #################
 ###IN PROGRESS###
 #################
+- save album
 - format spacing in terminal for output
-
+- list albums & album id from artists   
+    * 2 word names only need the last name o-o
 
 #################
 ####COMPLETED####
