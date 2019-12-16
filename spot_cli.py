@@ -7,7 +7,8 @@ from subprocess import call
 import spotipy
 import spotipy.util as util
 from json.decoder import JSONDecodeError
-from classes import User
+from classes.User import User
+from classes.Track import Track
 from utils import convertToMin
 
 
@@ -16,11 +17,14 @@ def generateToken(username):
     generates auth token for spotify object
     '''
     try:
-        token = util.prompt_for_user_token(username, scope="user-library-read playlist-modify-private user-library-modify")
+        token = util.prompt_for_user_token(
+            username, scope="user-library-read playlist-modify-private user-library-modify")
     except (AttributeError, JSONDecodeError):
         os.remove(f".cache-{username}")
-        token = util.prompt_for_user_token(username, scope="user-library-read playlist-modify-private user-library-modify")
+        token = util.prompt_for_user_token(
+            username, scope="user-library-read playlist-modify-private user-library-modify")
     return token
+
 
 def searchArtist(name, limit=10):
     '''
@@ -35,6 +39,7 @@ def searchArtist(name, limit=10):
         artist.append((attr['id'], attr['external_urls']['spotify']))
     return artist[0][1], artist[0][0]
 
+
 def artistAlbums(artist_id, limit):
     '''
     returns the albums & albums' id of artist
@@ -48,6 +53,7 @@ def artistAlbums(artist_id, limit):
             albums.append((album_name, album_id))
     return albums
 
+
 def getAlbumSongs(album_id):
     '''
     returns tracks array of specific album
@@ -57,13 +63,15 @@ def getAlbumSongs(album_id):
     a_tracks = spotify.album_tracks(album_id)
     data = a_tracks['items']
     for attr in data:
-        track_name, track_number, duration = attr['name'], attr['track_number'], convertToMin(attr['duration_ms'])
+        track_name, track_number, duration = attr['name'], attr['track_number'], convertToMin(
+            attr['duration_ms'])
         tracks.append((track_number, track_name, duration))
     return tracks
 
+
 def printAlbums(artist, artist_id):
-    ''' 
-    prints albums of artist 
+    '''
+    prints albums of artist
     '''
     albums = artistAlbums(artist_id, limit=50)
     album_slots = []
@@ -73,20 +81,24 @@ def printAlbums(artist, artist_id):
         print(str(i).ljust(10), albums[i][0])
     return album_slots, albums
 
+
 def printTracksOfAlbum(artist, album_slots, albums):
     '''
     prints tracks of album
     '''
-    album_number_response = int(input('Type in the # of the album you would like to browse: (press any key to esc) '))
+    album_number_response = int(input(
+        'Type in the # of the album you would like to browse: (press any key to esc) '))
     if album_number_response in album_slots:
         album_name, album_id = albums[album_number_response][0], albums[album_number_response][1]
         songs = getAlbumSongs(album_id)
         print(f'\n{artist} - {album_name}\'s Tracklist: ')
         for track_number, track_name, duration in songs:
-            print(str(track_number).ljust(10), track_name.ljust(50), duration.ljust(25))
+            print(str(track_number).ljust(10),
+                  track_name.ljust(50), duration.ljust(25))
     else:
         sys.exit()
     return songs
+
 
 def search():
     '''
@@ -98,11 +110,14 @@ def search():
     print('\n')
     songs = printTracksOfAlbum(artist, album_slots, albums)
 
+
+# TODO
 def songDetails(songs):
     '''
     get details of specific song
     '''
     pass
+
 
 def listAlbum(spotify, artist_name):
     '''
@@ -114,12 +129,13 @@ def listAlbum(spotify, artist_name):
         name, album_id = selection
         print(name.ljust(50), album_id.ljust(50))
 
+
 def commands(arg, user, spotify):
     '''
     command line arguments
     '''
     if arg == '-t':
-        user.tracks(spotify, limit=10)    
+        user.tracks(spotify, limit=10)
     elif arg == '-a':
         user.albums(spotify, limit=10)
     elif arg == '-s':
