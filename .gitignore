@@ -1,7 +1,6 @@
-__pycache__/*
-.vscode/*
+__pycache__/
+.vscode/
 env
 .cache-joe
-bullshit.py
 ignore
 classes/__pycache__

@@ -8,10 +8,6 @@ class User:
     def __init__(self, username):
         self.username = username
 
-    def name(self, spotify):
-        user = spotify.current_user()
-        return user['display_name']
-
     def albums(self, spotify, limit):
         '''
         outputs artist's name, album name, total tracks, 
@@ -43,11 +39,7 @@ class User:
         return outputTrack(t)
 
     def saveAlbum(self, spotify, album_id):
-        '''
-        adds album to saved albums
-        '''
-        albums = [album_id]
-        return spotify.current_user_saved_albums_add(albums=albums)
+        return spotify.current_user_saved_albums_add(albums=[album_id])
 
     def saveTracks(self, spotify):
         pass
@@ -59,4 +51,4 @@ class User:
         pass
 
     def __repr__(self):
-        return f'User: {self.username} | Methods: .tracks(), .albums() .name() .saveAlbum()'
+        return f'User: {self.username} | Methods: .tracks(), .albums() .saveAlbum()'

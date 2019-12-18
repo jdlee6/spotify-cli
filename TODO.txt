@@ -7,15 +7,12 @@
 - song detail function
 - top tracks of artists
 * needs to list if explict or non explicit
-* clean up unnecessary functions
 
 
 #################
 ###IN PROGRESS###
 #################
-- list albums & album id from artists   
-    * 2 word names only need the last name o-o
-- create classes for Track, Album and etc...
+
 
 
 #################
@@ -25,3 +22,6 @@
 - create cli command menu [x]
 - save album function [x]
 - format spacing in terminal for output [x]
+- refactored search.py [x]
+- create classes for Track, Album [x]
+- list albums & album id function [x]
